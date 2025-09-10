@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager with Progress Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Task Manager</h1>
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark/light mode">🌙</button>
+        </header>
+
+        <div class="progress-section">
+            <div class="progress-info">
+                <span id="task-count">0 of 0 tasks completed</span>
+                <span id="progress-percentage">0%</span>
+            </div>
+            <div class="progress-bar">
+                <div id="progress-fill" class="progress-fill"></div>
+            </div>
+        </div>
+        
+        <div id="completion-stats" class="stats-section">
+            <!-- Statistics will be inserted here by JavaScript -->
+        </div>
+
+        <div class="dashboard">
+            <!-- To Do Column -->
+            <div class="dashboard-column todo-column">
+                <div class="column-header">
+                    <h2 class="column-title"><i class="fas fa-list-ul"></i> To Do</h2>
+                    <button class="add-task-btn" id="add-todo-btn">
+                        <i class="fas fa-plus"></i> Add Task
+                    </button>
+                </div>
+            <!-- sorting feature-->
+            <div class="sorting-controls">
+                <div class="sort-group">
+                    <label for="todo-sort">Sort by:</label>
+                    <div class="custom-dropdown" id="todo-sort-dropdown">
+                        <div class="dropdown-selected">
+                            <span class="selected-text">Newest First</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="dropdown-options">
+                            <div class="dropdown-option" data-value="newest">
+                                <i class="fas fa-clock"></i> Newest First
+                            </div>
+                            <div class="dropdown-option" data-value="oldest">
+                                <i class="fas fa-history"></i> Oldest First
+                            </div>
+                            <div class="dropdown-option" data-value="priority-high">
+                                <span class="priority-indicator priority-High-indicator"></span>
+                                Priority (High to Low)
+                            </div>
+                            <div class="dropdown-option" data-value="priority-low">
+                                <span class="priority-indicator priority-Low-indicator"></span>
+                                Priority (Low to High)
+                            </div>
+                            <div class="dropdown-option" data-value="deadline-early">
+                                <i class="fas fa-calendar-day"></i> Deadline (Early First)
+                            </div>
+                            <div class="dropdown-option" data-value="deadline-late">
+                                <i class="fas fa-calendar-plus"></i> Deadline (Late First)
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="todo-sort" value="newest">
+                </div>
+                <button id="apply-sort" class="sort-btn">
+                    <i class="fas fa-sort-amount-down"></i> Apply Sort
+                </button>
+            </div>
+
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search tasks..." class="todo-search">
+                </div>
+
+
+                <div class="task-list" id="todo-list">
+                    <!-- To Do tasks will be inserted here -->
+                </div>
+            </div>
+
+            <!-- In Progress Column -->
+            <div class="dashboard-column progress-column">
+                <div class="column-header">
+                    <h2 class="column-title"><i class="fas fa-spinner"></i> In Progress</h2>
+                </div>
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search tasks..." class="progress-search">
+                </div>
+                <div class="task-list" id="progress-list">
+                    <!-- In Progress tasks will be inserted here -->
+                </div>
+            </div>
+
+            <!-- Completed Column -->
+            <div class="dashboard-column completed-column">
+                <div class="column-header">
+                    <h2 class="column-title"><i class="fas fa-check-circle"></i> Completed</h2>
+                </div>
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search tasks..." class="completed-search">
+                </div>
+                <div class="task-list" id="completed-list">
+                    <!-- Completed tasks will be inserted here -->
+                </div>
+            </div>
+        </div>
+
+        <div id="undo-toast" class="undo-toast" aria-live="polite">
+            Task deleted. <button id="undo-delete">Undo</button>
+        </div>
+    </div>
+
+    <!-- Add Task Modal -->
+<div id="task-modal" class="modal" role="dialog" aria-labelledby="modal-title" aria-hidden="true">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="modal-title">Add New Task</h2>
+            <button id="close-modal" class="close-modal" aria-label="Close modal">×</button>
+        </div>
+        <div class="modal-body">
+            <form id="task-form">
+                <input type="hidden" id="edit-id">
+                
+                <div class="form-group">
+                    <label for="edit-title">Title *</label>
+                    <input type="text" id="edit-title" required aria-required="true">
+                </div>
+                
+                <div class="form-group">
+                    <label for="edit-description">Description</label>
+                    <textarea id="edit-description" rows="3"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="edit-priority">Priority</label>
+                    <select id="edit-priority">
+                        <option value="Low">Low</option>
+                        <option value="Medium" selected>Medium</option>
+                        <option value="High">High</option>
+                    </select>
+                </div>
+                
+                <!-- Modified Due Date section with time -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="edit-dueDate">Due Date</label>
+                        <input type="date" id="edit-dueDate">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-dueTime">Due Time</label>
+                        <input type="time" id="edit-dueTime" value="23:59">
+                    </div>
+                </div>
+                
+                <div class="modal-actions">
+                    <button type="submit" class="btn-primary">Add Task</button>
+                    <button type="button" id="cancel-edit" class="btn-secondary">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script src="script.js"></script>
+</body>
+<footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>Productivity Stats</h3>
+            <div class="footer-stats">
+                <div class="footer-stat">
+                    <span class="stat-number" id="footer-total-tasks">0</span>
+                    <span class="stat-label">Total Tasks</span>
+                </div>
+                <div class="footer-stat">
+                    <span class="stat-number" id="footer-completed-tasks">0</span>
+                    <span class="stat-label">Completed</span>
+                </div>
+                <div class="footer-stat">
+                    <span class="stat-number" id="footer-inprogress-tasks">0</span>
+                    <span class="stat-label">In Progress</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-section">
+            <h3>Quick Actions</h3>
+            <div class="footer-actions">
+                <button class="footer-btn" onclick="addTaskFromFooter()">
+                    <i class="fas fa-plus"></i> New Task
+                </button>
+                <button class="footer-btn" onclick="clearCompletedTasks()">
+                    <i class="fas fa-trash"></i> Clear Completed
+                </button>
+                <button class="footer-btn" onclick="exportTasks()">
+                    <i class="fas fa-download"></i> Export
+                </button>
+            </div>
+        </div>
+        
+        <div class="footer-section">
+            <h3>About</h3>
+            <p>Task Manager with Progress Tracker v1.0</p>
+            <p>Made with <i class="fas fa-heart" style="color: #e91e63;"></i> using HTML, CSS & JavaScript</p>
+            <div class="footer-links">
+                <a href="#" onclick="showHelp()">Help</a>
+                <a href="#" onclick="showFeedback()">Feedback</a>
+                <a href="#" onclick="showAbout()">About</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer-bottom">
+        <p>&copy; <span id="current-year"></span> Task Manager. All rights reserved.</p>
+        <div class="footer-bottom-links">
+            <a href="#" onclick="showPrivacy()">Privacy</a>
+            <a href="#" onclick="showTerms()">Terms</a>
+            <a href="#" id="theme-toggle-footer" onclick="toggleTheme()">Toggle Theme</a>
+        </div>
+    </div>
+</footer>
+</html>
