@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy & Terms of Service | Task Manager</title>
+    <style>
+        /* Base Styles */
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3a0ca3;
+            --accent-color: #7209b7;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --success-color: #4cc9f0;
+            --warning-color: #f72585;
+            --danger-color: #e63946;
+            --gray-color: #6c757d;
+            --light-gray: #e9ecef;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            background-color: var(--light-color);
+            transition: var(--transition);
+        }
+
+        body.dark-mode {
+            --light-color: #121212;
+            --dark-color: #f8f9fa;
+            --light-gray: #2d2d2d;
+            --gray-color: #adb5bd;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: var(--box-shadow);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Navigation Tabs */
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0 1rem;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .tab-button {
+            background: none;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            border-bottom: 3px solid transparent;
+            color: var(--gray-color);
+        }
+
+        .tab-button.active {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        .tab-button:hover {
+            color: var(--primary-color);
+        }
+
+        /* Content Sections */
+        .tab-content {
+            display: none;
+            padding: 2rem 0;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin: 1.5rem 0 1rem;
+            color: var(--secondary-color);
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        ul, ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight {
+            background-color: var(--light-gray);
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: var(--box-shadow);
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        /* Back to App Button */
+        .back-button {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            margin-top: 2rem;
+            transition: var(--transition);
+            font-weight: 600;
+        }
+
+        .back-button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--light-gray);
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            color: var(--gray-color);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .tabs {
+                flex-direction: column;
+            }
+            
+            .tab-button {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" id="themeToggle">🌙</button>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <h1>Task Manager</h1>
+            <p class="subtitle">Privacy Policy & Terms of Service</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Tab Navigation -->
+        <div class="tabs">
+            <button class="tab-button active" data-tab="privacy">Privacy Policy</button>
+            <button class="tab-button" data-tab="terms">Terms of Service</button>
+        </div>
+
+        <!-- Privacy Policy Content -->
+        <section id="privacy" class="tab-content active">
+            <h2>Privacy Policy</h2>
+            <p><strong>Last updated:</strong> <span id="currentDate"></span></p>
+
+            <p>Thank you for using Task Manager. This Privacy Policy explains how we handle your information when you use our application.</p>
+
+            <h3>Information We Collect</h3>
+            <p>Task Manager is designed with your privacy in mind. We collect and store only the following information:</p>
+            <ul>
+                <li><strong>Task Data:</strong> The tasks you create, including titles, descriptions, due dates, priorities, and status</li>
+                <li><strong>Usage Data:</strong> Time tracking information and completion statistics</li>
+                <li><strong>Preferences:</strong> Your theme preference (light/dark mode) and sorting preferences</li>
+            </ul>
+
+            <h3>How We Store Your Information</h3>
+            <p>All your data is stored locally on your device using your browser's local storage. We do not:</p>
+            <ul>
+                <li>Transfer your data to external servers</li>
+                <li>Share your data with third parties</li>
+                <li>Use cookies or tracking technologies</li>
+                <li>Collect personal identification information</li>
+            </ul>
+
+            <h3>Data Security</h3>
+            <p>Since your data remains on your device, its security depends on your device's security measures. We recommend:</p>
+            <ul>
+                <li>Keeping your browser updated</li>
+                <li>Using device security features (passcodes, biometrics)</li>
+                <li>Regularly exporting your data if needed</li>
+            </ul>
+
+            <h3>Your Rights</h3>
+            <p>You have complete control over your data:</p>
+            <ul>
+                <li><strong>Access:</strong> You can view all your data within the application</li>
+                <li><strong>Modification:</strong> You can edit or delete tasks at any time</li>
+                <li><strong>Export:</strong> You can export your data using the export feature</li>
+                <li><strong>Deletion:</strong> Clearing your browser data will permanently delete all application data</li>
+            </ul>
+
+            <h3>Changes to This Policy</h3>
+            <p>We may update this privacy policy from time to time. We will notify you of any changes by updating the "Last updated" date at the top of this policy.</p>
+
+            <div class="highlight">
+                <p><strong>Important:</strong> This application runs entirely in your browser. Your data never leaves your device unless you explicitly export it.</p>
+            </div>
+
+            <a href="index.html" class="back-button">← Back to Task Manager</a>
+        </section>
+
+        <!-- Terms of Service Content -->
+        <section id="terms" class="tab-content">
+            <h2>Terms of Service</h2>
+            <p><strong>Last updated:</strong> <span id="currentDateTerms"></span></p>
+
+            <p>Welcome to Task Manager. By using our application, you agree to these Terms of Service.</p>
+
+            <h3>Acceptance of Terms</h3>
+            <p>By accessing and using Task Manager, you accept and agree to be bound by the terms and provisions of this agreement.</p>
+
+            <h3>Use License</h3>
+            <p>Permission is granted to temporarily use Task Manager for personal, non-commercial transitory viewing only.</p>
+
+            <h3>User Responsibilities</h3>
+            <p>As a user of Task Manager, you agree to:</p>
+            <ul>
+                <li>Use the application for lawful purposes only</li>
+                <li>Not attempt to reverse engineer or modify the application code</li>
+                <li>Not use the application in any way that could damage, disable, or impair the service</li>
+                <li>Maintain the security of your device and browser</li>
+            </ul>
+
+            <h3>Limitations of Liability</h3>
+            <p>Task Manager is provided "as is" without any warranties. We shall not be held liable for:</p>
+            <ul>
+                <li>Data loss resulting from browser or device issues</li>
+                <li>Inability to access the application due to technical issues</li>
+                <li>Any direct, indirect, or consequential damages</li>
+            </ul>
+
+            <h3>Data Management</h3>
+            <p>You are solely responsible for:</p>
+            <ul>
+                <li>Backing up your important task data</li>
+                <li>Exporting data before clearing browser storage</li>
+                <li>Managing your device's security to protect your data</li>
+            </ul>
+
+            <h3>Modifications to Terms</h3>
+            <p>We reserve the right to modify these terms at any time. We will provide notice of changes by updating the "Last updated" date.</p>
+
+            <h3>Governing Law</h3>
+            <p>These terms shall be governed by and construed in accordance with the laws of your jurisdiction.</p>
+
+            <div class="highlight">
+                <p><strong>Note:</strong> This is a client-side application. Your data is stored locally and we have no access to it.</p>
+            </div>
+
+            <a href="index.html" class="back-button">← Back to Task Manager</a>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <p>&copy; <span id="currentYear"></span> Task Manager. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="#" id="privacyLink">Privacy Policy</a>
+                <a href="#" id="termsLink">Terms of Service</a>
+                <a href="https://www.linkedin.com/in/abhay-maurya03/" target="_blank">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Set current date and year
+        document.getElementById('currentDate').textContent = new Date().toLocaleDateString();
+        document.getElementById('currentDateTerms').textContent = new Date().toLocaleDateString();
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Tab functionality
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const tabId = button.getAttribute('data-tab');
+                
+                // Remove active class from all buttons and contents
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+                
+                // Add active class to clicked button and corresponding content
+                button.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // Footer link functionality
+        document.getElementById('privacyLink').addEventListener('click', (e) => {
+            e.preventDefault();
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabContents.forEach(content => content.classList.remove('active'));
+            
+            document.querySelector('[data-tab="privacy"]').classList.add('active');
+            document.getElementById('privacy').classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        document.getElementById('termsLink').addEventListener('click', (e) => {
+            e.preventDefault();
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabContents.forEach(content => content.classList.remove('active'));
+            
+            document.querySelector('[data-tab="terms"]').classList.add('active');
+            document.getElementById('terms').classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+        // Check for saved theme preference or use OS preference
+        const currentTheme = localStorage.getItem('theme') || (prefersDarkScheme.matches ? 'dark' : 'light');
+        if (currentTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+            themeToggle.textContent = '☀️';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                localStorage.setItem('theme', 'dark');
+                themeToggle.textContent = '☀️';
+            } else {
+                localStorage.setItem('theme', 'light');
+                themeToggle.textContent = '🌙';
+            }
+        });
+
+        // Listen for OS theme changes
+        prefersDarkScheme.addEventListener('change', (e) => {
+            if (!localStorage.getItem('theme')) {
+                if (e.matches) {
+                    document.body.classList.add('dark-mode');
+                    themeToggle.textContent = '☀️';
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    themeToggle.textContent = '🌙';
+                }
+            }
+        });
+    </script>
+</body>
+</html>
