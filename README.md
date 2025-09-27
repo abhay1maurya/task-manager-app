@@ -72,8 +72,3 @@ This application works in all modern browsers that support:
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Acknowledgments
-
-- Icons from Font Awesome
-- Design inspiration from modern task management apps
